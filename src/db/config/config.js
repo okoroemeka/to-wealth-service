@@ -8,15 +8,15 @@ const dialect = 'postgres';
 
 module.exports = {
   development: {
-    use_env_variable: 'DATABASE_URL',
-    dialect
+    use_env_variable: 'DATABASE_URL_DEV',
+    dialect,
   },
   test: {
     use_env_variable: 'DATABASE_URL_TEST',
     logging: !!(LOGGING === 'true'),
-    dialect
+    dialect,
   },
   production: {
-    use_env_variable: 'DATABASE_URL'
-  }
+    use_env_variable: 'DATABASE_URL',
+  },
 };
