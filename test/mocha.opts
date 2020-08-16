@@ -1,4 +1,0 @@
---recursive
---require babel-register
---exit
---timeout 20000
