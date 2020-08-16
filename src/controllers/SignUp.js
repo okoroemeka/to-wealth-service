@@ -1,4 +1,3 @@
-import { compareSync } from 'bcrypt';
 import models from '../db/models';
 // import tokenHelper from '../middlewares/authentication';
 import {
@@ -38,15 +37,15 @@ async function userSignUp(request, response) {
       email: user.email,
       token,
     };
-    return response.status(201).json({
-      status: 'Success',
-      data: userResponseInfo,
-    });
+    return responseHelper(response, 201, 'Success', userResponseInfo, true);
   } catch (error) {
-    return response.status(500).json({
-      status: 'Error',
-      message: 'An error occured, please try again later',
-    });
+    return responseHelper(
+      response,
+      500,
+      'Error',
+      'An error occured, please try again later',
+      false
+    );
   }
 }
 
