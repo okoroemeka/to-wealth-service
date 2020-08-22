@@ -5,6 +5,9 @@
   "repository": "https://github.com/okoroemeka/server-template.git",
   "author": "okoroemeka <solomonokoro056@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "10.x"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "dev": "npm-run-all --parallel clean migrate",
