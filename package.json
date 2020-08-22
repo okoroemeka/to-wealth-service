@@ -5,6 +5,9 @@
   "repository": "https://github.com/okoroemeka/server-template.git",
   "author": "okoroemeka <solomonokoro056@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "dev": "npm-run-all --parallel clean migrate",
@@ -36,11 +39,11 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
+    "@babel/runtime": "^7.11.2",
     "@babel/core": "^7.7.7",
     "@babel/node": "^7.7.7",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.7.7",
-    "@babel/runtime": "^7.8.7",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
