@@ -14,7 +14,6 @@ const { User } = models;
  * @returns {object} user
  */
 async function SignIn(request, response) {
-  process.exit(1);
   const { email, password } = request.body;
   try {
     const user = await queryHelper.findOne(User, {
