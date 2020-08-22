@@ -10,5 +10,11 @@ const PORT = process.env.PORT || 3000;
 registerMiddlewares(app);
 
 app.use('/api/v1', userRouter);
+app.use('*', (req, res) => {
+  res.status(404).json({
+    status: 'Fail',
+    message: 'Not found',
+  });
+});
 
 app.listen(PORT, () => appLogs.info(`Server running on port ${PORT}`));
