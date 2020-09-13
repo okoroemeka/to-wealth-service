@@ -31,7 +31,8 @@ async function userSignUp(request, response) {
     }
     const user = await User.create(userInfo);
     const token = tokenHelper.generateToken(
-      ({ id: user.id, email }, { expiresIn: '4h' })
+      { id: user.id, email },
+      { expiresIn: '24h' }
     );
     const userResponseInfo = {
       email: user.email,

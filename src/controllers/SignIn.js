@@ -40,7 +40,7 @@ async function SignIn(request, response) {
     }
     const token = tokenHelper.generateToken(
       { id: user.id, email, isDoctor: user.isDoctor },
-      { expiresIn: '4h' }
+      { expiresIn: '24h' }
     );
     return responseHelper(
       response,
