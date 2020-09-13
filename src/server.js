@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { userRouter } from './routes';
+import { userRouter, goalRouter } from './routes';
 import registerMiddlewares from './middlewares';
 import appLogs from '../logger/logger';
 
@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 registerMiddlewares(app);
 
 app.use('/api/v1', userRouter);
+app.use('/api/v1', goalRouter);
 app.use('*', (_, res) => {
   res.status(404).json({
     status: 'Fail',

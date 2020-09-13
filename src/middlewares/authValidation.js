@@ -2,6 +2,7 @@ import {
   response as responseHelper,
   joiSignupSchema,
   joiSignInSchema,
+  joiGoalSchema,
 } from '../helpers';
 
 /**
@@ -33,6 +34,22 @@ export default class Validation {
   static async signInValidation(request, response, next) {
     try {
       const validation = joiSignInSchema();
+      await validation.validateAsync(request.body);
+      return next();
+    } catch (error) {
+      return responseHelper(response, 400, 'Error', error.message, false);
+    }
+  }
+
+  /**
+   * @returns {functionCall} goalValidation
+   * @param {*} request
+   * @param {*} response
+   * @param {*} next
+   */
+  static async goalValidation(request, response, next) {
+    try {
+      const validation = joiGoalSchema();
       await validation.validateAsync(request.body);
       return next();
     } catch (error) {

@@ -45,4 +45,19 @@ const joiSignInSchema = () =>
       'string.empty': 'password field cannot be empty',
     }),
   });
-export { joiSignupSchema, joiSignInSchema };
+const joiGoalSchema = () =>
+  Joi.object({
+    goalName: Joi.string().required().messages({
+      'any.required': 'goal name is reqiured',
+      'string.empty': 'goal name cannot be empty',
+    }),
+    goalValue: Joi.string().required().messages({
+      'any.required': 'goal value is reqiured',
+      'string.empty': 'goal value cannot be empty',
+    }),
+    timeline: Joi.string().required().messages({
+      'any.required': 'timeline is reqiured',
+      'string.empty': 'timeline cannot be empty',
+    }),
+  });
+export { joiSignupSchema, joiSignInSchema, joiGoalSchema };
