@@ -26,7 +26,7 @@ class Goals {
         description,
         color,
         userId: userData.id,
-        completionRate: (totalSaved / goalValue).toFixed(0),
+        completionRate: ((totalSaved / goalValue) * 100).toFixed(0),
       });
 
       return responseHelper(response, 201, 'Success', goal, true);
