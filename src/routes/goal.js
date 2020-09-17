@@ -17,4 +17,23 @@ goalRouter.patch(
   VerifyUser.verifyToken,
   Goals.editGoal
 );
+goalRouter.get(
+  '/goal/:goalId',
+  //   Validation.goalValidation,
+  VerifyUser.verifyToken,
+  Goals.getGoal
+);
+goalRouter.patch(
+  '/goal/:goalId',
+  //   Validation.goalValidation,
+  VerifyUser.verifyToken,
+  Goals.pauseOrContinueGoal
+);
+goalRouter.delete(
+  '/goal/:goalId',
+  //   Validation.goalValidation,
+  VerifyUser.verifyToken,
+  Goals.deleteGoal
+);
+goalRouter.get('/goal', VerifyUser.verifyToken, Goals.getAllGoal);
 export default goalRouter;
