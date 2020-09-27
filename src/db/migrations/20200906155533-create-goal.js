@@ -34,7 +34,7 @@ export default {
         defaultValue: '',
       },
       completionRate: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DOUBLE,
         allowNull: true,
         defaultValue: 0,
       },
