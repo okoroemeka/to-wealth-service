@@ -44,7 +44,7 @@ export default (sequelize, DataTypes) => {
         defaultValue: '',
       },
       completionRate: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DOUBLE,
         allowNull: true,
         defaultValue: 0,
       },

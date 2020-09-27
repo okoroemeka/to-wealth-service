@@ -26,7 +26,7 @@ class Goals {
         description,
         color,
         userId: userData.id,
-        completionRate: ((totalSaved / goalValue) * 100).toFixed(0),
+        completionRate: ((totalSaved / goalValue) * 100).toFixed(2),
       });
 
       return responseHelper(response, 201, 'Success', goal, true);
@@ -113,7 +113,7 @@ class Goals {
           false
         );
       }
-      const updatedGoal = await Goal.update(
+      const [_, updatedGoal] = await Goal.update(
         {
           goalName,
           goalValue,
@@ -121,11 +121,14 @@ class Goals {
           timeline,
           description,
           color,
+          completionRate: ((totalSaved / goalValue) * 100).toFixed(2),
         },
         {
           where: {
             id: goalId,
           },
+          returning: true,
+          plain: true,
         }
       );
 
