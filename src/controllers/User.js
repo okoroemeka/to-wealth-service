@@ -1,5 +1,4 @@
 import models from '../db/models';
-// import tokenHelper from '../middlewares/authentication';
 import { response as responseHelper, queryHelper } from '../helpers';
 
 const { User } = models;
@@ -26,6 +25,7 @@ async function getUser(request, response) {
         false
       );
     }
+    delete user.dataValues.password;
     return responseHelper(response, 200, 'Success', user, true);
   } catch (error) {
     return responseHelper(
