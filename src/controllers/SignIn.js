@@ -39,7 +39,7 @@ async function SignIn(request, response) {
       );
     }
     const token = tokenHelper.generateToken(
-      { id: user.id, email, isDoctor: user.isDoctor },
+      { id: user.id, email },
       { expiresIn: '24h' }
     );
     return responseHelper(
