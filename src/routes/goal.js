@@ -24,10 +24,16 @@ goalRouter.get(
   Goals.getGoal
 );
 goalRouter.patch(
-  '/goal/:goalId',
+  '/goal/pauseOrContinue/:goalId',
   //   Validation.goalValidation,
   VerifyUser.verifyToken,
   Goals.pauseOrContinueGoal
+);
+goalRouter.patch(
+  '/goal/completeGoal/:goalId',
+  //   Validation.goalValidation,
+  VerifyUser.verifyToken,
+  Goals.markGoalAscomplete
 );
 goalRouter.delete(
   '/goal/:goalId',
