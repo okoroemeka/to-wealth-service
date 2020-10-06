@@ -52,6 +52,7 @@ class Goals {
       const goals = await Goal.findAll({
         where: {
           userId: userData.id,
+          completed: false,
         },
         attributes: [
           'id',
@@ -292,6 +293,61 @@ class Goals {
         pauseOrContinueGoal,
         true
       );
+    } catch (error) {
+      return responseHelper(
+        response,
+        500,
+        'Error',
+        'An error occured, please try again later',
+        false
+      );
+    }
+  }
+
+  /**
+   * @returns {object} response message
+   * @param {object} request
+   * @param {object} response
+   */
+  static async markGoalAscomplete(request, response) {
+    const { goalId } = request.params;
+    const {
+      body: { completed },
+      userData,
+    } = request;
+
+    try {
+      const goal = await queryHelper.findOne(Goal, { id: goalId });
+
+      if (!goal) {
+        return responseHelper(
+          response,
+          404,
+          'Fail',
+          'Goal does not exist',
+          false
+        );
+      }
+      if (goal.userId !== userData.id) {
+        return responseHelper(
+          response,
+          404,
+          'Fail',
+          'Goal does not exist',
+          false
+        );
+      }
+      const completeGoal = await Goal.update(
+        {
+          completed,
+        },
+        {
+          where: {
+            id: goalId,
+          },
+        }
+      );
+      return responseHelper(response, 200, 'Success', completeGoal, true);
     } catch (error) {
       return responseHelper(
         response,
