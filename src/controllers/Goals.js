@@ -47,30 +47,66 @@ class Goals {
    * @param {object} response
    */
   static async getAllGoal(request, response) {
-    const { userData } = request;
+    const { userData, query } = request;
+
+    const enums = {
+      active: 'active',
+      reached: 'completed',
+      paused: 'paused',
+    };
+
+    Object.freeze(enums);
+    let goals = [];
+
+    const attributes = [
+      'id',
+      'goalName',
+      'goalValue',
+      'totalSaved',
+      'timeline',
+      'description',
+      'color',
+      'completionRate',
+      'completed',
+      'paused',
+    ];
+
     try {
-      const goals = await Goal.findAll({
-        where: {
-          userId: userData.id,
-          completed: false,
-        },
-        attributes: [
-          'id',
-          'goalName',
-          'goalValue',
-          'totalSaved',
-          'timeline',
-          'description',
-          'color',
-          'completionRate',
-          'completed',
-          'paused',
-        ],
-      });
+      if (!Object.keys(query).length || query.goalQueryParam === enums.active) {
+        goals = await queryHelper.findAll(
+          Goal,
+          {
+            userId: userData.id,
+            completed: false,
+          },
+          attributes
+        );
+      }
+      if (query.goalQueryParam === enums.reached) {
+        goals = await queryHelper.findAll(
+          Goal,
+          {
+            userId: userData.id,
+            completed: true,
+          },
+          attributes
+        );
+      }
+      if (query.goalQueryParam === enums.paused) {
+        goals = await queryHelper.findAll(
+          Goal,
+          {
+            userId: userData.id,
+            paused: true,
+            completed: false,
+          },
+          attributes
+        );
+      }
       if (!goals.length) {
         return responseHelper(response, 404, 'Fail', 'No goal found', false);
       }
-      return responseHelper(response, 201, 'Success', goals, true);
+      return responseHelper(response, 200, 'Success', goals, true);
     } catch (error) {
       return responseHelper(
         response,
