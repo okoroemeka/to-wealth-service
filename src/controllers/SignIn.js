@@ -19,6 +19,7 @@ async function SignIn(request, response) {
     const user = await queryHelper.findOne(User, {
       email: email.toLowerCase(),
     });
+
     if (!user) {
       return responseHelper(
         response,
@@ -28,6 +29,7 @@ async function SignIn(request, response) {
         false
       );
     }
+
     const checkPassword = compareSync(password, user.password);
     if (!checkPassword) {
       return responseHelper(
@@ -38,10 +40,12 @@ async function SignIn(request, response) {
         false
       );
     }
+
     const token = tokenHelper.generateToken(
       { id: user.id, email },
       { expiresIn: '24h' }
     );
+
     return responseHelper(
       response,
       200,

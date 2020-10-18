@@ -54,6 +54,14 @@ export default (sequelize, DataTypes) => {
           },
         },
       },
+      position: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      birthday: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
       googleid: {
         type: DataTypes.STRING,
         allowNull: true,

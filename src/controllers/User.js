@@ -10,12 +10,10 @@ const { User } = models;
  */
 async function getUser(request, response) {
   const {
-    userData: { email },
+    userData: { id },
   } = request;
   try {
-    const user = await queryHelper.findOne(User, {
-      email: email.toLowerCase(),
-    });
+    const user = await queryHelper.findById(User, id);
     if (!user) {
       return responseHelper(
         response,
