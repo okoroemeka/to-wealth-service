@@ -20,6 +20,14 @@ export default {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      position: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      birthday: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
       googleid: {
         type: Sequelize.STRING,
         allowNull: true,

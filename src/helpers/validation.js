@@ -29,6 +29,7 @@ const joiSignupSchema = () =>
           'password field cannot be empty and must be more than 8 alphanumeric characters eg:Some09@ ',
       }),
   });
+
 const joiSignInSchema = () =>
   Joi.object({
     email: Joi.string()
@@ -45,6 +46,7 @@ const joiSignInSchema = () =>
       'string.empty': 'password field cannot be empty',
     }),
   });
+
 const joiGoalSchema = () =>
   Joi.object({
     goalName: Joi.string().required().messages({
@@ -60,4 +62,60 @@ const joiGoalSchema = () =>
       'string.empty': 'timeline cannot be empty',
     }),
   });
-export { joiSignupSchema, joiSignInSchema, joiGoalSchema };
+
+const joiUpdatePasswordSchema = () =>
+  Joi.object({
+    oldPassword: Joi.string().required().messages({
+      'any.required': 'old password is reqiured',
+      'string.empty': 'old password field cannot be empty',
+    }),
+    newPassword: Joi.string()
+      .regex(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$/)
+      .required()
+      .messages({
+        'any.required': 'new password is reqiured',
+        'string.empty':
+          'new password field cannot be empty and must be more than 8 alphanumeric characters eg:Some09@ ',
+      }),
+    confirmPassword: Joi.string()
+      .regex(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$/)
+      .required()
+      .messages({
+        'any.required': 'confirm password is reqiured',
+        'string.empty':
+          'confirm password field cannot be empty and must be more than 8 alphanumeric characters eg:Some09@ ',
+      }),
+  });
+
+const joiUpdateProfileSchema = () =>
+  Joi.object({
+    fullname: Joi.string().required().messages({
+      'any.required': 'fullname is reqiured',
+      'string.empty': 'fullname cannot be empty',
+    }),
+    email: Joi.string()
+      .email({
+        minDomainSegments: 2,
+      })
+      .required()
+      .messages({
+        'any.required': 'email is reqiured',
+        'string.empty': 'email field cannot be empty',
+      }),
+    occupation: Joi.string().required().messages({
+      'any.required': 'occupation is reqiured',
+      'string.empty': 'occupation cannot be empty',
+    }),
+    birthday: Joi.string().required().messages({
+      'any.required': 'birthday is reqiured',
+      'string.empty': 'birthday cannot be empty',
+    }),
+    imageUrl: Joi.string().required().messages({
+      'any.required': 'imageUrl is reqiured',
+      'string.empty': 'imageUrl cannot be empty',
+    }),
+  });
+
+export {
+  joiSignupSchema, joiSignInSchema, joiGoalSchema, joiUpdatePasswordSchema, joiUpdateProfileSchema
+};
