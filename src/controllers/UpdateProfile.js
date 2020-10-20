@@ -41,7 +41,7 @@ async function updateProfile(request, response) {
     const [_, updatedProfile] = await queryHelper.update(User, {
       fullname,
       email: newEmail,
-      occupation,
+      position: occupation,
       birthday,
       image: imageUrl
     }, {
