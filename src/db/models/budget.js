@@ -34,7 +34,11 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.DOUBLE,
       allowNull: true,
       defaultValue: 0.0,
-    }
+    },
+    userId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
   });
   Budget.associate = (models) => {
     // associations can be defined here
