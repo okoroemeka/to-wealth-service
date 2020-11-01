@@ -116,6 +116,29 @@ const joiUpdateProfileSchema = () =>
     }),
   });
 
+const joiBudgetSchema = () => Joi.object({
+  category: Joi.string().required().messages({
+    'any.required': 'category is reqiured',
+    'string.empty': 'category field cannot be empty',
+  }),
+  budget: Joi.string().required().messages({
+    'any.required': 'budget is reqiured',
+    'string.empty': 'budget feild cannot be empty',
+  }),
+  description: Joi.string().required().messages({
+    'any.required': 'description is reqiured',
+    'string.empty': 'description feild cannot be empty',
+  }),
+  actual: Joi.string().message({
+    'string.empty': 'description feild cannot be empty',
+  })
+});
+
 export {
-  joiSignupSchema, joiSignInSchema, joiGoalSchema, joiUpdatePasswordSchema, joiUpdateProfileSchema
+  joiSignupSchema,
+  joiSignInSchema,
+  joiGoalSchema,
+  joiUpdatePasswordSchema,
+  joiUpdateProfileSchema,
+  joiBudgetSchema
 };

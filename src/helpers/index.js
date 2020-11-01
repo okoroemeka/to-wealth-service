@@ -2,7 +2,7 @@ import response from './response';
 import queryHelper from './query';
 import tokenHelper from './token';
 import {
-  joiSignupSchema, joiSignInSchema, joiGoalSchema, joiUpdatePasswordSchema, joiUpdateProfileSchema
+  joiSignupSchema, joiSignInSchema, joiGoalSchema, joiUpdatePasswordSchema, joiUpdateProfileSchema, joiBudgetSchema
 } from './validation';
 
 export {
@@ -13,5 +13,6 @@ export {
   joiSignInSchema,
   joiGoalSchema,
   joiUpdateProfileSchema,
-  joiUpdatePasswordSchema
+  joiUpdatePasswordSchema,
+  joiBudgetSchema
 };

@@ -5,7 +5,7 @@ import User from '../controllers/User';
 import UpdateProfile from '../controllers/UpdateProfile';
 import UpdatePassword from '../controllers/UpdatePassword';
 
-import AuthValidation from '../middlewares/authValidation';
+import AuthValidation from '../middlewares/Validation';
 import VerifyUser from '../helpers/token';
 
 const userRouter = express.Router();

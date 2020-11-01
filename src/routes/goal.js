@@ -1,6 +1,6 @@
 import express from 'express';
 import Goals from '../controllers/Goals';
-import Validation from '../middlewares/authValidation';
+import Validation from '../middlewares/Validation';
 import VerifyUser from '../helpers/token';
 
 const goalRouter = express.Router();
