@@ -121,17 +121,21 @@ const joiBudgetSchema = () => Joi.object({
     'any.required': 'category is reqiured',
     'string.empty': 'category field cannot be empty',
   }),
+
   budget: Joi.string().required().messages({
     'any.required': 'budget is reqiured',
-    'string.empty': 'budget feild cannot be empty',
+    'string.empty': 'budget field cannot be empty',
   }),
+
   description: Joi.string().required().messages({
     'any.required': 'description is reqiured',
-    'string.empty': 'description feild cannot be empty',
+    'string.empty': 'description field cannot be empty',
   }),
-  actual: Joi.string().message({
-    'string.empty': 'description feild cannot be empty',
-  })
+
+  actual: Joi.string().required().messages({
+    'any.required': 'actual is reqiured',
+    'string.empty': 'actual field cannot be empty',
+  }),
 });
 
 export {
