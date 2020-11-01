@@ -8,22 +8,31 @@ const budgetRouter = express.Router();
 budgetRouter.post(
   '/budget',
   VerifyUser.verifyToken,
-  // Validation.createBudgetValidation,
+  Validation.createBudgetValidation,
   Budget.createBudget
 );
 
 budgetRouter.get(
   '/budget/:budgetId',
   VerifyUser.verifyToken,
-  // Validation.createBudgetValidation,
   Budget.getBudget
 );
 
 budgetRouter.get(
   '/budget',
   VerifyUser.verifyToken,
-  // Validation.createBudgetValidation,
   Budget.getAllBudget
+);
+budgetRouter.patch(
+  '/budget/:budgetId',
+  VerifyUser.verifyToken,
+  Validation.createBudgetValidation,
+  Budget.updateBudget
+);
+budgetRouter.delete(
+  '/budget/:budgetId',
+  VerifyUser.verifyToken,
+  Budget.deleteBudget
 );
 
 export default budgetRouter;

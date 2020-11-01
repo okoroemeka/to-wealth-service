@@ -62,7 +62,8 @@ class Budget {
   }
 
   /**
- *  @returns {object} response
+ *
+ * @returns {object} response
  * @param {object} request
  * @param {object} response
  */
@@ -76,6 +77,73 @@ class Budget {
       }
 
       return responseHelper(response, 200, 'Success', budgets, true);
+    } catch (error) {
+      return responseHelper(
+        response,
+        500,
+        'Error',
+        'An error occured, please try again later',
+        false
+      );
+    }
+  }
+
+  /**
+   * @returns {object} budget
+   * @param {object} request
+   * @param {object} response
+   */
+  static async updateBudget(request, response) {
+    try {
+      const {
+        userData: { id }, params: { budgetId }, body: {
+          category, budget, description, actual
+        }
+      } = request;
+
+      const checkBudget = await queryHelper.findOne(BudgetModel, { id: budgetId, userId: id });
+
+      if (!checkBudget) {
+        return responseHelper(response, 404, 'Fail', 'Budget does not exist', false);
+      }
+
+      const updatedBudget = await queryHelper.update(BudgetModel, {
+        category, budget, description, actual
+      }, { id: budgetId }, true);
+
+      return responseHelper(response, 200, 'Sucess', updatedBudget[1][0], true);
+    } catch (error) {
+      return responseHelper(
+        response,
+        500,
+        'Error',
+        'An error occured, please try again later',
+        false
+      );
+    }
+  }
+
+  /**
+   * @returns {object} response message
+   * @param {*} request
+   * @param {*} response
+   */
+  static async deleteBudget(request, response) {
+    try {
+      const { params: { budgetId }, userData: { id } } = request;
+      const budget = await queryHelper.findOne(BudgetModel, { id: budgetId, userId: id });
+
+      if (!budget) {
+        return responseHelper(response, 404, 'Fail', 'budget does not exist', false);
+      }
+
+      await BudgetModel.destroy({
+        where: {
+          id: budgetId
+        }
+      });
+
+      return responseHelper(response, 204, 'Success', 'budget deleted successfully');
     } catch (error) {
       return responseHelper(
         response,
