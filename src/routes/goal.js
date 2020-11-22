@@ -7,22 +7,17 @@ const goalRouter = express.Router();
 
 goalRouter.post(
   '/goal',
-  // Validation.goalValidation,
   VerifyUser.verifyToken,
+  Validation.goalValidation,
   Goals.createGoal
 );
 goalRouter.patch(
   '/goal/:goalId',
-  //   Validation.goalValidation,
   VerifyUser.verifyToken,
+  Validation.goalValidation,
   Goals.editGoal
 );
-goalRouter.get(
-  '/goal/:goalId',
-  //   Validation.goalValidation,
-  VerifyUser.verifyToken,
-  Goals.getGoal
-);
+goalRouter.get('/goal/:goalId', VerifyUser.verifyToken, Goals.getGoal);
 goalRouter.patch(
   '/goal/pauseOrContinue/:goalId',
   //   Validation.goalValidation,
@@ -35,11 +30,12 @@ goalRouter.patch(
   VerifyUser.verifyToken,
   Goals.markGoalAscomplete
 );
-goalRouter.delete(
-  '/goal/:goalId',
-  //   Validation.goalValidation,
+goalRouter.patch(
+  '/goal/topup/:goalId',
+  Validation.topUpValidation,
   VerifyUser.verifyToken,
-  Goals.deleteGoal
+  Goals.topUPGoal
 );
+goalRouter.delete('/goal/:goalId', VerifyUser.verifyToken, Goals.deleteGoal);
 goalRouter.get('/goal', VerifyUser.verifyToken, Goals.getAllGoal);
 export default goalRouter;
