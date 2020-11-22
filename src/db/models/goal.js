@@ -38,11 +38,6 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: '',
       },
-      color: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: '',
-      },
       completionRate: {
         type: DataTypes.DOUBLE,
         allowNull: true,
@@ -57,6 +52,10 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: true,
+      },
+      category: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       userId: {
         allowNull: false,

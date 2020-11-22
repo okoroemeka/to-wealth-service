@@ -61,6 +61,17 @@ const joiGoalSchema = () =>
       'any.required': 'timeline is reqiured',
       'string.empty': 'timeline cannot be empty',
     }),
+    totalSaved: Joi.string().messages({
+      'string.empty': 'totalSaved field cannot be empty',
+    }),
+    category: Joi.string().required().messages({
+      'any.required': 'category is reqiured',
+      'string.empty': 'category field cannot be empty',
+    }),
+    description: Joi.string().required().messages({
+      'any.required': 'description is reqiured',
+      'string.empty': 'description field cannot be empty',
+    }),
   });
 
 const joiUpdatePasswordSchema = () =>
@@ -116,27 +127,36 @@ const joiUpdateProfileSchema = () =>
     }),
   });
 
-const joiBudgetSchema = () => Joi.object({
-  category: Joi.string().required().messages({
-    'any.required': 'category is reqiured',
-    'string.empty': 'category field cannot be empty',
-  }),
+const joiBudgetSchema = () =>
+  Joi.object({
+    category: Joi.string().required().messages({
+      'any.required': 'category is reqiured',
+      'string.empty': 'category field cannot be empty',
+    }),
 
-  budget: Joi.string().required().messages({
-    'any.required': 'budget is reqiured',
-    'string.empty': 'budget field cannot be empty',
-  }),
+    budget: Joi.string().required().messages({
+      'any.required': 'budget is reqiured',
+      'string.empty': 'budget field cannot be empty',
+    }),
 
-  description: Joi.string().required().messages({
-    'any.required': 'description is reqiured',
-    'string.empty': 'description field cannot be empty',
-  }),
+    description: Joi.string().required().messages({
+      'any.required': 'description is reqiured',
+      'string.empty': 'description field cannot be empty',
+    }),
 
-  actual: Joi.string().required().messages({
-    'any.required': 'actual is reqiured',
-    'string.empty': 'actual field cannot be empty',
-  }),
-});
+    actual: Joi.string().required().messages({
+      'any.required': 'actual is reqiured',
+      'string.empty': 'actual field cannot be empty',
+    }),
+  });
+
+const joiGoalTopUpSchema = () =>
+  Joi.object({
+    topUpValue: Joi.string().required().messages({
+      'any.required': 'top up value is reqiured',
+      'string.empty': 'top up value field cannot be empty',
+    }),
+  });
 
 export {
   joiSignupSchema,
@@ -144,5 +164,6 @@ export {
   joiGoalSchema,
   joiUpdatePasswordSchema,
   joiUpdateProfileSchema,
-  joiBudgetSchema
+  joiBudgetSchema,
+  joiGoalTopUpSchema,
 };

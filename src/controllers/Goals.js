@@ -13,7 +13,14 @@ class Goals {
    */
   static async createGoal(request, response) {
     const {
-      body: { goalName, goalValue, totalSaved, timeline, description, color },
+      body: {
+        goalName,
+        goalValue,
+        totalSaved,
+        timeline,
+        description,
+        category,
+      },
       userData,
     } = request;
 
@@ -24,7 +31,7 @@ class Goals {
         totalSaved: Number(totalSaved),
         timeline,
         description,
-        color,
+        category,
         userId: userData.id,
         completionRate: ((totalSaved / goalValue) * 100).toFixed(2),
       });
@@ -65,8 +72,8 @@ class Goals {
       'totalSaved',
       'timeline',
       'description',
-      'color',
       'completionRate',
+      'category',
       'completed',
       'paused',
     ];
@@ -200,6 +207,7 @@ class Goals {
           false
         );
       }
+
       if (goal.userId !== userData.id) {
         return responseHelper(
           response,
@@ -264,6 +272,85 @@ class Goals {
         204,
         'Success',
         'message deleted succefulloy',
+        true
+      );
+    } catch (error) {
+      return responseHelper(
+        response,
+        500,
+        'Error',
+        'An error occured, please try again later',
+        false
+      );
+    }
+  }
+
+  /**
+   * @returns {object} response message
+   * @param {object} request
+   * @param {object} response
+   */
+  static async topUPGoal(request, response) {
+    try {
+      const { goalId } = request.params;
+
+      const {
+        body: { topUpValue },
+        userData: { id },
+      } = request;
+
+      const goal = await queryHelper.findOne(Goal, {
+        id: goalId,
+        userId: id,
+      });
+
+      if (!goal) {
+        return responseHelper(
+          response,
+          404,
+          'Fail',
+          'Goal does not exist',
+          false
+        );
+      }
+
+      const { goalValue, totalSaved } = goal;
+
+      if (Number(topUpValue) + Number(totalSaved) > goalValue) {
+        return responseHelper(
+          response,
+          400,
+          'Fail',
+          totalSaved === goalValue
+            ? 'goal has been reached already'
+            : `Top up value is more than required. You need top up goal with ${
+                goalValue - Number(totalSaved)
+              } or lower`,
+          false
+        );
+      }
+
+      await queryHelper.update(
+        Goal,
+        {
+          totalSaved: Number(topUpValue) + Number(totalSaved),
+          completionRate: (
+            ((Number(topUpValue) + Number(totalSaved)) / goalValue) *
+            100
+          ).toFixed(2),
+          completed: Number(topUpValue) + Number(totalSaved) === goalValue,
+        },
+        {
+          id: goalId,
+          userId: id,
+        },
+        true
+      );
+      return responseHelper(
+        response,
+        200,
+        'Success',
+        'Top up was successful',
         true
       );
     } catch (error) {
