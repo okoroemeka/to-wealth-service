@@ -2,5 +2,6 @@
 import userRouter from './user';
 import goalRouter from './goal';
 import budgetRouter from './budget';
+import settingsRouter from './settings';
 
-export { userRouter, goalRouter, budgetRouter };
+export { userRouter, goalRouter, budgetRouter, settingsRouter };
