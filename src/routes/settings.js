@@ -6,10 +6,10 @@ import VerifyUser from '../helpers/token';
 const settingsRouter = express.Router();
 
 settingsRouter.put(
-    '/settings/update-general-settings',
-    VerifyUser.verifyToken,
-    Validation.generalSettingsValidation,
-    UserSettings.updateGeneralSettings
+  '/settings/update-general-settings',
+  VerifyUser.verifyToken,
+  Validation.generalSettingsValidation,
+  UserSettings.updateGeneralSettings
 );
 
 export default settingsRouter;
