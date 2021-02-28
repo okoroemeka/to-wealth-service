@@ -41,17 +41,14 @@ class UserSettings {
 
             return responseHelper(response, 200, 'Success', updatedSettings, true);
         } catch (error) {
-            console.log('error :>> ', error);
             return responseHelper(response, 500, 'Error', error, false);
         }
     };
 
     static async viewGeneralSettings(request, response) {
         const { userData: { id } } = request;
-        console.log(typeof(id));
         try {
-            const settings = await Settings.findOne({where: { userId: parseInt(id) }});
-            console.log(typeof(settings));
+            const settings = await Settings.findOne({where: { userId: id }});
             if (!settings) {
                 return responseHelper(response, 404, 'Error', 'Settings not found', false);
             }
