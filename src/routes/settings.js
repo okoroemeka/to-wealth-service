@@ -12,4 +12,10 @@ settingsRouter.put(
   UserSettings.updateGeneralSettings
 );
 
+settingsRouter.get(
+    '/settings/get-general-settings',
+    VerifyUser.verifyToken,
+    UserSettings.viewGeneralSettings
+);
+
 export default settingsRouter;

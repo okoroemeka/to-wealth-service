@@ -3,11 +3,26 @@ export default (sequelize, DataTypes) => {
   const Settings = sequelize.define(
     'Settings',
     {
-      darkMode: DataTypes.BOOLEAN,
-      language: DataTypes.STRING,
-      country: DataTypes.STRING,
-      currency: DataTypes.STRING,
-      userId: DataTypes.STRING,
+      darkMode: {
+        type: DataTypes.BOOLEAN,
+        default: false
+      },
+      language: {
+        type: DataTypes.STRING,
+        default: 'English',
+      },
+      country: {
+        type: DataTypes.STRING,
+        default: 'Nigeria'
+      },
+      currency: {
+        type: DataTypes.STRING,
+        default: 'NGN'
+      },
+      userId: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
     },
     {}
   );
