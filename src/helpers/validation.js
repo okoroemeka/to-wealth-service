@@ -166,6 +166,12 @@ const joiGoalTopUpSchema = () =>
       country: Joi.string()
     })
 
+  const joiNetworthSettingsSchema = () =>
+    Joi.object({
+      interestRate: Joi.number(),
+      monthlyIncome: Joi.number()
+    })
+
 export {
   joiSignupSchema,
   joiSignInSchema,
@@ -174,5 +180,6 @@ export {
   joiUpdateProfileSchema,
   joiBudgetSchema,
   joiGoalTopUpSchema,
-  joiGeneralSettingsSchema
+  joiGeneralSettingsSchema,
+  joiNetworthSettingsSchema
 };

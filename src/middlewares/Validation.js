@@ -8,7 +8,7 @@ import {
   joiBudgetSchema,
   joiGoalTopUpSchema,
 } from '../helpers';
-import { joiGeneralSettingsSchema } from '../helpers/validation';
+import { joiGeneralSettingsSchema, joiNetworthSettingsSchema } from '../helpers/validation';
 
 /**
  * Validation middleware class
@@ -134,6 +134,22 @@ export default class Validation {
   static async generalSettingsValidation(request, response, next) {
     try {
       const validation = joiGeneralSettingsSchema();
+      await validation.validateAsync(request.body);
+      return next();
+    } catch (error) {
+      return responseHelper(response, 400, 'Error', error.message, false);
+    }
+  }
+
+  /**
+   * @returns {functionCall} response
+   * @param {object} request
+   * @param {object} response
+   * @param {object} next
+   */
+  static async networthSettingsValidation(request, response, next) {
+    try {
+      const validation = joiNetworthSettingsSchema();
       await validation.validateAsync(request.body);
       return next();
     } catch (error) {
