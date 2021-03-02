@@ -24,7 +24,7 @@ export default {
           default: 'NGN'
         },
         userId: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           allowNull: false
         },
         createdAt: {

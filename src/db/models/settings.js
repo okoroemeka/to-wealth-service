@@ -20,7 +20,7 @@ export default (sequelize, DataTypes) => {
         default: 'NGN'
       },
       userId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
       }
     },

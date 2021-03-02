@@ -12,7 +12,7 @@ networthSettingsRouter.put(
     UserNetworthSettings.updateNetworthSettings
 )
 networthSettingsRouter.get(
-    '/networth-settings/update-networth-settings',
+    '/networth-settings/get-networth-settings',
     VerifyUser.verifyToken,
     UserNetworthSettings.getNetworthSettings
 )
