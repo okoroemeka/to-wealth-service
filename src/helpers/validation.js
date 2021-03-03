@@ -158,6 +158,20 @@ const joiGoalTopUpSchema = () =>
     }),
   });
 
+  const joiGeneralSettingsSchema = () =>
+    Joi.object({
+      darkMode: Joi.boolean(),
+      language: Joi.string(),
+      currency: Joi.string(),
+      country: Joi.string()
+    })
+
+  const joiNetworthSettingsSchema = () =>
+    Joi.object({
+      interestRate: Joi.number(),
+      monthlyIncome: Joi.number()
+    })
+
 export {
   joiSignupSchema,
   joiSignInSchema,
@@ -166,4 +180,6 @@ export {
   joiUpdateProfileSchema,
   joiBudgetSchema,
   joiGoalTopUpSchema,
+  joiGeneralSettingsSchema,
+  joiNetworthSettingsSchema
 };

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { userRouter, goalRouter, budgetRouter } from './routes';
+import { userRouter, goalRouter, budgetRouter, settingsRouter, networthSettingsRouter } from './routes';
 import registerMiddlewares from './middlewares';
 import appLogs from '../logger/logger';
 
@@ -12,6 +12,8 @@ registerMiddlewares(app);
 app.use('/api/v1', userRouter);
 app.use('/api/v1', goalRouter);
 app.use('/api/v1', budgetRouter);
+app.use('/api/v1', settingsRouter);
+app.use('/api/v1', networthSettingsRouter);
 
 app.use('*', (_, res) => {
   res.status(404).json({
