@@ -15,12 +15,12 @@ class Budget {
   static async createBudget(request, response) {
     const {
       body: {
-        category, budget, description, actual
+        categoryId, budget, description, actual
       }, userData
     } = request;
     try {
       const newBudget = await BudgetModel.create({
-        category, budget, description, actual, userId: userData.id
+        categoryId, budget, description, userId: userData.id
       });
       return responseHelper(response, 201, 'Success', newBudget, true);
     } catch (error) {
@@ -43,7 +43,7 @@ class Budget {
     try {
       const { budgetId } = request.params;
       const { userData } = request;
-      const budget = await queryHelper.findOne(BudgetModel, { id: budgetId, userId: userData.id });
+      const budget = await BudgetModel.findOne({where: { id: budgetId, userId: userData.id }, include: ['budgetsCategory']});
 
       if (!budget) {
         return responseHelper(response, 404, 'Fail', 'Budget does not exist', false);
@@ -70,7 +70,7 @@ class Budget {
   static async getAllBudget(request, response) {
     try {
       const { userData: { id } } = request;
-      const budgets = await queryHelper.findAll(BudgetModel, { userId: id }, ['category', 'description', 'budget', 'actual', 'userId']);
+      const budgets = await BudgetModel.findAll({where: { userId: id }, attributes: ['categoryId', 'description', 'budget', 'userId'], include: ['budgetsCategory']});
 
       if (!budgets.length) {
         return responseHelper(response, 404, 'Fail', 'No budget found', false);
@@ -78,6 +78,7 @@ class Budget {
 
       return responseHelper(response, 200, 'Success', budgets, true);
     } catch (error) {
+      console.log(error);
       return responseHelper(
         response,
         500,
@@ -97,7 +98,7 @@ class Budget {
     try {
       const {
         userData: { id }, params: { budgetId }, body: {
-          category, budget, description, actual
+          categoryId, budget, description
         }
       } = request;
 
@@ -108,11 +109,12 @@ class Budget {
       }
 
       const updatedBudget = await queryHelper.update(BudgetModel, {
-        category, budget, description, actual
+        categoryId, budget, description
       }, { id: budgetId }, true);
 
       return responseHelper(response, 200, 'Sucess', updatedBudget[1][0], true);
     } catch (error) {
+      console.log(error);
       return responseHelper(
         response,
         500,

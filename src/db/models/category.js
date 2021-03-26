@@ -1,7 +1,7 @@
 'use strict';
 import { Model } from 'sequelize';
 export default (sequelize, DataTypes) => {
-  class Budget extends Model {
+  class Category extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,51 +9,45 @@ export default (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Budget.belongsTo(models.User, {
-        foreignKey: "userId",
-        as: "budgets",
-        onDelete: "CASCADE",
-      });
-      Budget.belongsTo(models.Category, {
+      Category.hasMany(models.Budget, {
         foreignKey: "categoryId",
-        as: "budgetsCategory",
+        as: "Budgets",
+      });
+      Category.belongsTo(models.User, {
+        foreignKey: "userId",
+        as: "categories",
         onDelete: "CASCADE",
       });
     }
   };
-  Budget.init({
-    categoryId: {
+  Category.init({
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    description: {
+    categoryName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
           args: true,
-          msg: "please provide budget description",
+          msg: "Provide Category Name",
         },
       },
     },
-    budget: {
-      type: DataTypes.DOUBLE,
+    type: {
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: {
           args: true,
-          msg: "provide budget amount",
+          msg: "Provide Category Type",
         },
       },
     },
-    userId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-    },
   }, {
     sequelize,
-    modelName: 'Budget',
+    modelName: 'Category',
   });
-  return Budget;
+  return Category;
 };
-

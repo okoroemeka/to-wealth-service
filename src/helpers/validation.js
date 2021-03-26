@@ -121,15 +121,12 @@ const joiUpdateProfileSchema = () =>
       'any.required': 'birthday is reqiured',
       'string.empty': 'birthday cannot be empty',
     }),
-    imageUrl: Joi.string().required().messages({
-      'any.required': 'imageUrl is reqiured',
-      'string.empty': 'imageUrl cannot be empty',
-    }),
+    imageUrl: Joi.string(),
   });
 
 const joiBudgetSchema = () =>
   Joi.object({
-    category: Joi.string().required().messages({
+    categoryId: Joi.number().required().messages({
       'any.required': 'category is reqiured',
       'string.empty': 'category field cannot be empty',
     }),
@@ -142,11 +139,6 @@ const joiBudgetSchema = () =>
     description: Joi.string().required().messages({
       'any.required': 'description is reqiured',
       'string.empty': 'description field cannot be empty',
-    }),
-
-    actual: Joi.string().required().messages({
-      'any.required': 'actual is reqiured',
-      'string.empty': 'actual field cannot be empty',
     }),
   });
 
