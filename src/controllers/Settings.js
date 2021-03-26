@@ -48,7 +48,7 @@ class UserSettings {
     static async viewGeneralSettings(request, response) {
         const { userData: { id } } = request;
         try {
-            const settings = await Settings.findOne({where: { userId: id }});
+            const settings = await Settings.findOne({where: { userId: id }, attributes: ['darkMode', 'country', 'currency', 'language']});
             if (!settings) {
                 return responseHelper(response, 404, 'Error', 'Settings not found', false);
             }
