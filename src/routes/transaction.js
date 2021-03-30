@@ -12,4 +12,11 @@ transactionRouter.post(
   Transaction.createTransaction
 );
 
+transactionRouter.patch(
+  "/transaction/:id",
+  VerifyUser.verifyToken,
+  Validation.createTransactionValidation,
+  Transaction.updateTransaction
+);
+
 export default transactionRouter;
