@@ -13,6 +13,12 @@ budgetRouter.post(
 );
 
 budgetRouter.get(
+  '/budget/formatted',
+  VerifyUser.verifyToken,
+  Budget.formatBudget
+);
+
+budgetRouter.get(
   '/budget/:budgetId',
   VerifyUser.verifyToken,
   Budget.getBudget
