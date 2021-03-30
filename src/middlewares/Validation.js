@@ -7,6 +7,7 @@ import {
   joiUpdateProfileSchema,
   joiBudgetSchema,
   joiGoalTopUpSchema,
+  joiTransactionSchema
 } from '../helpers';
 import { joiGeneralSettingsSchema, joiNetworthSettingsSchema } from '../helpers/validation';
 
@@ -102,6 +103,22 @@ export default class Validation {
   static async createBudgetValidation(request, response, next) {
     try {
       const validation = joiBudgetSchema();
+      await validation.validateAsync(request.body);
+      return next();
+    } catch (error) {
+      return responseHelper(response, 400, 'Error', error.message, false);
+    }
+  }
+
+  /**
+   * @returns {functionCall} response
+   * @param {object} request
+   * @param {object} response
+   * @param {object} next
+   */
+  static async createTransactionValidation(request, response, next) {
+    try {
+      const validation = joiTransactionSchema();
       await validation.validateAsync(request.body);
       return next();
     } catch (error) {

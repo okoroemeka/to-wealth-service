@@ -13,6 +13,10 @@ export default (sequelize, DataTypes) => {
         foreignKey: "categoryId",
         as: "Budgets",
       });
+      Category.hasMany(models.Transaction, {
+        foreignKey: "categoryId",
+        as: "Transactions",
+      });
       Category.belongsTo(models.User, {
         foreignKey: "userId",
         as: "categories",

@@ -1,6 +1,5 @@
 import express from 'express';
 import CategoryController from '../controllers/Category';
-import Validation from '../middlewares/Validation';
 import VerifyUser from '../helpers/token';
 import budgetRouter from './budget';
 
@@ -16,6 +15,12 @@ budgetRouter.get(
     '/category',
     VerifyUser.verifyToken,
     CategoryController.getCategories
+);
+
+budgetRouter.get(
+    '/category/type',
+    VerifyUser.verifyToken,
+    CategoryController.getCategoriesByType
 );
 
 export default categoryRouter;
