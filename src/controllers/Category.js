@@ -36,18 +36,27 @@ class CategoryController {
 
   static async getCategories(request, response) {
     const {
+      userData: { id }
+    } = request;
+
+    try {
+      const categories = await queryHelper.findAll(Category, {userId: id}, ['categoryName', 'type', 'userId', 'id']);
+      return responseHelper(response, 200, "Success", categories, true);
+    } catch (error) {
+      return responseHelper(response, 500, "Error", error);
+    }
+  }
+
+  static async getCategoriesByType(request, response) {
+    const {
       userData: { id },
       query: {type}
     } = request;
 
-    console.log({id});
-
     try {
       const categories = await queryHelper.findAll(Category, {userId: id, type}, ['categoryName', 'type', 'userId']);
-      console.log({categories});
       return responseHelper(response, 200, "Success", categories, true);
     } catch (error) {
-        console.log(error);
       return responseHelper(response, 500, "Error", error);
     }
   }

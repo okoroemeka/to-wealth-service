@@ -142,6 +142,34 @@ const joiBudgetSchema = () =>
     }),
   });
 
+const joiTransactionSchema = () =>
+  Joi.object({
+    categoryId: Joi.number().required().messages({
+      'any.required': 'category is reqiured',
+      'string.empty': 'category field cannot be empty',
+    }),
+
+    amount: Joi.number().required().messages({
+      'any.required': 'amount is reqiured',
+      'string.empty': 'amount field cannot be empty',
+    }),
+
+    description: Joi.string().required().messages({
+      'any.required': 'description is reqiured',
+      'string.empty': 'description field cannot be empty',
+    }),
+
+    type: Joi.string().required().messages({
+      'any.required': 'type is reqiured',
+      'string.empty': 'type field cannot be empty',
+    }),
+
+    date: Joi.date().required().messages({
+      'any.required': 'date is reqiured',
+      'string.empty': 'date field cannot be empty',
+    }),
+  });
+
 const joiGoalTopUpSchema = () =>
   Joi.object({
     topUpValue: Joi.string().required().messages({
@@ -173,5 +201,6 @@ export {
   joiBudgetSchema,
   joiGoalTopUpSchema,
   joiGeneralSettingsSchema,
-  joiNetworthSettingsSchema
+  joiNetworthSettingsSchema,
+  joiTransactionSchema
 };

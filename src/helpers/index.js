@@ -9,6 +9,7 @@ import {
   joiUpdateProfileSchema,
   joiBudgetSchema,
   joiGoalTopUpSchema,
+  joiTransactionSchema
 } from './validation';
 
 export {
@@ -22,4 +23,5 @@ export {
   joiUpdatePasswordSchema,
   joiBudgetSchema,
   joiGoalTopUpSchema,
+  joiTransactionSchema
 };

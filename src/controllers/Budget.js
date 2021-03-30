@@ -15,7 +15,7 @@ class Budget {
   static async createBudget(request, response) {
     const {
       body: {
-        categoryId, budget, description, actual
+        categoryId, budget, description
       }, userData
     } = request;
     try {
