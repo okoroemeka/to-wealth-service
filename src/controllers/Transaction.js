@@ -137,7 +137,7 @@ class Transaction {
     } = request;
 
     try {
-      const transaction = TransactionModel.findOne({
+      const transaction = await TransactionModel.findOne({
         where: { id, userId },
         include: ["transactionCategory"],
       });
