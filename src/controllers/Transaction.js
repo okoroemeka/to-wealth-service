@@ -188,6 +188,56 @@ class Transaction {
       );
     }
   }
+
+  static async getTransactionsByType(request, response) {
+    const {
+      userData: { id: userId },
+      query: {type}
+    } = request;
+
+    try {
+      const transactions = await TransactionModel.findAll({
+        where: { userId, type },
+        include: ["transactionCategory"],
+      });
+
+      return responseHelper(response, 200, "Success", transactions, true);
+    } catch (error) {
+      console.log(error);
+      return responseHelper(
+        response,
+        500,
+        "Error",
+        "Something went wrong",
+        false
+      );
+    }
+  }
+
+  static async getTransactionsByCategory(request, response) {
+    const {
+      userData: { id: userId },
+      query: {categoryId}
+    } = request;
+
+    try {
+      const transactions = await TransactionModel.findAll({
+        where: { userId, categoryId },
+        include: ["transactionCategory"],
+      });
+
+      return responseHelper(response, 200, "Success", transactions, true);
+    } catch (error) {
+      console.log(error);
+      return responseHelper(
+        response,
+        500,
+        "Error",
+        "Something went wrong",
+        false
+      );
+    }
+  }
 }
 
 export default Transaction;

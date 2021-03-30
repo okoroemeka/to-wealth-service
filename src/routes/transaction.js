@@ -26,6 +26,18 @@ transactionRouter.delete(
 );
 
 transactionRouter.get(
+  "/transaction/type",
+  VerifyUser.verifyToken,
+  Transaction.getTransactionsByType
+);
+
+transactionRouter.get(
+  "/transaction/category",
+  VerifyUser.verifyToken,
+  Transaction.getTransactionsByCategory
+);
+
+transactionRouter.get(
   "/transaction/:id",
   VerifyUser.verifyToken,
   Transaction.getTransaction
