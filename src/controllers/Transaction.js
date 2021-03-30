@@ -164,6 +164,30 @@ class Transaction {
       );
     }
   }
+
+  static async getAllTransactions(request, response) {
+    const {
+      userData: { id: userId }
+    } = request;
+
+    try {
+      const transactions = await TransactionModel.findAll({
+        where: { userId },
+        include: ["transactionCategory"],
+      });
+
+      return responseHelper(response, 200, "Success", transactions, true);
+    } catch (error) {
+      console.log(error);
+      return responseHelper(
+        response,
+        500,
+        "Error",
+        "Something went wrong",
+        false
+      );
+    }
+  }
 }
 
 export default Transaction;

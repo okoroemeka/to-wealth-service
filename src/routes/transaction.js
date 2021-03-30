@@ -31,4 +31,10 @@ transactionRouter.get(
   Transaction.getTransaction
 );
 
+transactionRouter.get(
+  "/transaction/",
+  VerifyUser.verifyToken,
+  Transaction.getAllTransactions
+);
+
 export default transactionRouter;
