@@ -32,7 +32,12 @@ class Transaction {
       return responseHelper(response, 500, "Error", error, false);
     }
   }
-
+  /**
+   * Method to Update Transaction
+   * @param {object} request
+   * @param {object} response
+   * @returns {object}
+   */
   static async updateTransaction(request, response) {
     const {
       userData: { id },
@@ -76,6 +81,85 @@ class Transaction {
         500,
         "Error",
         "An error occured, please try again later",
+        false
+      );
+    }
+  }
+
+  static async deleteTransaction(request, response) {
+    const {
+      userData: { id: userId },
+      params: { id },
+    } = request;
+
+    try {
+      const transaction = await queryHelper.findOne(TransactionModel, {
+        id,
+        userId,
+      });
+
+      if (!transaction) {
+        return responseHelper(
+          response,
+          404,
+          "Error",
+          "Transaction not Found",
+          false
+        );
+      }
+
+      await TransactionModel.destroy({
+        where: { id },
+      });
+
+      return responseHelper(
+        response,
+        200,
+        "Success",
+        "Transaction Deleted",
+        true
+      );
+    } catch (error) {
+      return responseHelper(
+        response,
+        500,
+        "Error",
+        "Something went wrong",
+        false
+      );
+    }
+  }
+
+  static async getTransaction(request, response) {
+    const {
+      userData: { id: userId },
+      params: { id },
+    } = request;
+
+    try {
+      const transaction = TransactionModel.findOne({
+        where: { id, userId },
+        include: ["transactionCategory"],
+      });
+
+      if (!transaction) {
+        return responseHelper(
+          response,
+          404,
+          "Error",
+          "Transaction not Found",
+          false
+        );
+      }
+
+      return responseHelper(response, 200, "Success", transaction, true);
+    } catch (error) {
+      console.log(error);
+      return responseHelper(
+        response,
+        500,
+        "Error",
+        "Something went wrong",
         false
       );
     }

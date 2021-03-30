@@ -19,4 +19,16 @@ transactionRouter.patch(
   Transaction.updateTransaction
 );
 
+transactionRouter.delete(
+  "/transaction/:id",
+  VerifyUser.verifyToken,
+  Transaction.deleteTransaction
+);
+
+transactionRouter.get(
+  "/transaction/:id",
+  VerifyUser.verifyToken,
+  Transaction.getTransaction
+);
+
 export default transactionRouter;
