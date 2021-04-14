@@ -1,6 +1,7 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 import models from "../db/models";
 import { response as responseHelper, queryHelper } from "../helpers";
+import dayjs from "dayjs";
 
 const Op = Sequelize.Op;
 const { Budget: BudgetModel, Transaction } = models;
@@ -212,22 +213,50 @@ class Budget {
   static async formatBudget(request, response) {
     const {
       userData: { id: userId },
+      query: { date },
     } = request;
 
     try {
-      const budgets = await BudgetModel.findAll({ where: { userId } });
+      const splitted = date.split(" ").join("");
 
-      const budgetCategories = budgets.map((budget) => budget.categoryId);
+      const start = dayjs(splitted).startOf("M");
+      const end = dayjs(splitted).endOf("M");
 
-      console.log({budgetCategories});
-
-      const transactions = await Transaction.findAll({
-        where: { userId, categoryId: { [Op.or]: budgetCategories } },
+      const budgets = await BudgetModel.findAll({
+        where: { userId },
+        include: ["budgetsCategory"],
+        attributes: ["categoryId", "budget", 'id'],
       });
 
-      console.log(transactions);
+      const wholeTransactions = await Transaction.findAll({
+        where: { userId },
+        attributes: ["amount", "date", "categoryId"],
+        include: ["transactionCategory"],
+      });
 
-      return responseHelper(response, 200, "Success", transactions, true);
+      const responseData = budgets.map((budget) => {
+        const transactions = wholeTransactions.filter(
+          (trx) =>
+            trx.categoryId === budget.categoryId &&
+            trx.date >= start &&
+            trx.date <= end
+        );
+
+        const actual = transactions.reduce(
+          (total, current) => total + current.amount,
+          0
+        );
+
+        return {
+          category: budget.budgetsCategory.categoryName,
+          budget: budget.budget,
+          actual,
+          remaining: budget.budget - actual,
+          id: budget.id
+        };
+      });
+
+      return responseHelper(response, 200, "Success", responseData, true);
     } catch (error) {
       console.log(error);
       return responseHelper(
