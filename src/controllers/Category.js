@@ -1,13 +1,13 @@
 import models from "../db/models";
 import { response as responseHelper, queryHelper } from "../helpers";
 
-const { Category } = models;
+const { TransactionCategory: Category } = models;
 
 class CategoryController {
   static async createCategory(request, response) {
     const {
       userData: { id },
-      body: { categoryName, type },
+      body: { categoryName, type, icon },
     } = request;
 
     try {
@@ -26,6 +26,7 @@ class CategoryController {
       const newCategory = await Category.create({
         categoryName,
         type,
+        icon,
         userId: id,
       });
       return responseHelper(response, 201, "Success", newCategory, true);
@@ -40,7 +41,7 @@ class CategoryController {
     } = request;
 
     try {
-      const categories = await queryHelper.findAll(Category, {userId: id}, ['categoryName', 'type', 'userId', 'id']);
+      const categories = await queryHelper.findAll(Category, {userId: id}, ['categoryName', 'type', 'userId', 'id', 'icon']);
       return responseHelper(response, 200, "Success", categories, true);
     } catch (error) {
       return responseHelper(response, 500, "Error", error);
@@ -54,7 +55,7 @@ class CategoryController {
     } = request;
 
     try {
-      const categories = await queryHelper.findAll(Category, {userId: id, type}, ['categoryName', 'type', 'userId']);
+      const categories = await queryHelper.findAll(Category, {userId: id, type}, ['categoryName', 'type', 'userId', 'icon']);
       return responseHelper(response, 200, "Success", categories, true);
     } catch (error) {
       return responseHelper(response, 500, "Error", error);
