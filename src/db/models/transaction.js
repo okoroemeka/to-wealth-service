@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'transactions',
         onDelete: 'CASCADE'
       });
-      Transaction.belongsTo(models.Category, {
+      Transaction.belongsTo(models.TransactionCategory, {
         foreignKey: "categoryId",
         as: 'transactionCategory',
         onDelete: 'CASCADE'
