@@ -59,6 +59,7 @@ export default class Validation {
       await validation.validateAsync(request.body);
       return next();
     } catch (error) {
+      console.log(error);
       return responseHelper(response, 400, 'Error', error.message, false);
     }
   }

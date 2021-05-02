@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "categoryId",
         as: "Transactions",
       });
+      TransactionCategory.hasMany(models.GoalModel, {
+        foreignKey: "category",
+        as: "Goals",
+      });
       TransactionCategory.belongsTo(models.User, {
         foreignKey: "userId",
         as: "transactionCategories",

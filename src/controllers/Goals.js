@@ -1,7 +1,7 @@
 import models from '../db/models';
 import { response as responseHelper, queryHelper } from '../helpers';
 
-const { Goal } = models;
+const { GoalModel: Goal } = models;
 /**
  * Goals
  */
@@ -12,6 +12,7 @@ class Goals {
    * @param {object} response
    */
   static async createGoal(request, response) {
+    console.log("here");
     const {
       body: {
         goalName,

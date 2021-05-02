@@ -14,7 +14,7 @@ export default (sequelize, DataTypes) => {
         as: "budgets",
         onDelete: "CASCADE",
       });
-      Budget.belongsTo(models.Category, {
+      Budget.belongsTo(models.TransactionCategory, {
         foreignKey: "categoryId",
         as: "budgetsCategory",
         onDelete: "CASCADE",

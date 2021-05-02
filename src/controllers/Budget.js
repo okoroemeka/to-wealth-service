@@ -27,6 +27,9 @@ class Budget {
         description,
         userId: userData.id,
       });
+
+      console.log({newBudget});
+      
       return responseHelper(response, 201, "Success", newBudget, true);
     } catch (error) {
       return responseHelper(
@@ -225,8 +228,10 @@ class Budget {
       const budgets = await BudgetModel.findAll({
         where: { userId },
         include: ["budgetsCategory"],
-        attributes: ["categoryId", "budget", 'id'],
+        // attributes: ["categoryId", "budget", 'id'],
       });
+
+      console.log({budgets});
 
       const wholeTransactions = await Transaction.findAll({
         where: { userId },
