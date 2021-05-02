@@ -64,7 +64,7 @@ const joiGoalSchema = () =>
     totalSaved: Joi.string().messages({
       'string.empty': 'totalSaved field cannot be empty',
     }),
-    category: Joi.string().required().messages({
+    category: Joi.number().required().messages({
       'any.required': 'category is reqiured',
       'string.empty': 'category field cannot be empty',
     }),
