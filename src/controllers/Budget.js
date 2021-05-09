@@ -4,7 +4,7 @@ import { response as responseHelper, queryHelper } from "../helpers";
 import dayjs from "dayjs";
 
 const Op = Sequelize.Op;
-const { Budget: BudgetModel, Transaction } = models;
+const { BudgetModel, Transaction } = models;
 
 /**
  * Budget
@@ -228,10 +228,8 @@ class Budget {
       const budgets = await BudgetModel.findAll({
         where: { userId },
         include: ["budgetsCategory"],
-        // attributes: ["categoryId", "budget", 'id'],
+        attributes: ["categoryId", "budget", 'id'],
       });
-
-      console.log({budgets});
 
       const wholeTransactions = await Transaction.findAll({
         where: { userId },
@@ -254,6 +252,7 @@ class Budget {
 
         return {
           category: budget.budgetsCategory.categoryName,
+          type: budget.budgetsCategory.type,
           budget: budget.budget,
           actual,
           remaining: budget.budget - actual,
