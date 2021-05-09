@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      TransactionCategory.hasMany(models.Budget, {
+      TransactionCategory.hasMany(models.BudgetModel, {
         foreignKey: "categoryId",
         as: "Budgets",
       });
