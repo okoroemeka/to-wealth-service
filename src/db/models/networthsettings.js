@@ -12,6 +12,15 @@ export default (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    savingType: {
+      type: DataTypes.STRING,
+      default: 'percentage',
+      allowNull: true
+    },
+    savingValue: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {});
   NetworthSettings.associate = function(models) {

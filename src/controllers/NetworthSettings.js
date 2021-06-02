@@ -7,7 +7,7 @@ class UserNetworthSettings {
   static async updateNetworthSettings(request, response) {
     const {
       userData,
-      body: { interestRate, monthlyIncome },
+      body: { interestRate, monthlyIncome, savingValue, savingType },
     } = request;
     try {
       const networthSettings = await queryHelper.findOne(NetworthSettings, {
@@ -17,6 +17,8 @@ class UserNetworthSettings {
         const newNetworthSettings = await NetworthSettings.create({
           interestRate,
           monthlyIncome,
+          savingType,
+          savingValue,
           userId: userData.id,
         });
         return responseHelper(
@@ -29,7 +31,7 @@ class UserNetworthSettings {
       }
 
       const [_, updatedNetworthSettings] = await NetworthSettings.update(
-        { interestRate, monthlyIncome },
+        { interestRate, monthlyIncome, savingType, savingValue },
         { where: { userId: userData.id }, returning: true, plain: true }
       );
 
@@ -52,7 +54,12 @@ class UserNetworthSettings {
     try {
       const networthSettings = await NetworthSettings.findOne({
         where: { userId: id },
-        attributes: ["interestRate", "monthlyIncome"],
+        attributes: [
+          "interestRate",
+          "monthlyIncome",
+          "savingType",
+          "savingValue",
+        ],
       });
       if (!networthSettings) {
         return responseHelper(

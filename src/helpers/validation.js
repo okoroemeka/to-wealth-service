@@ -189,7 +189,9 @@ const joiGoalTopUpSchema = () =>
   const joiNetworthSettingsSchema = () =>
     Joi.object({
       interestRate: Joi.number(),
-      monthlyIncome: Joi.number()
+      monthlyIncome: Joi.number(),
+      savingType: Joi.string(),
+      savingValue: Joi.number()
     })
 
 export {
