@@ -1,5 +1,6 @@
-import models from '../db/models';
-import { response as responseHelper, queryHelper } from '../helpers';
+import models from "../db/models";
+import { response as responseHelper, queryHelper } from "../helpers";
+import QueryHelpers from "../helpers/query";
 
 const { GoalModel: Goal } = models;
 /**
@@ -26,6 +27,17 @@ class Goals {
     } = request;
 
     try {
+      // Check for goal length
+      const goals = await QueryHelpers.findAll(Goal, {userId: userData.id, completed: false});
+
+      if (goals.length >= 2) {
+        return responseHelper(
+          response,
+          403,
+          "Error",
+          "You have reached the maximum number of goals, complete one or more to create another"
+        );
+      }
       const goal = await Goal.create({
         goalName,
         goalValue: Number(goalValue),
@@ -37,13 +49,13 @@ class Goals {
         completionRate: ((totalSaved / goalValue) * 100).toFixed(2),
       });
 
-      return responseHelper(response, 201, 'Success', goal, true);
+      return responseHelper(response, 201, "Success", goal, true);
     } catch (error) {
       return responseHelper(
         response,
         500,
-        'Error',
-        'An error occured, please try again later',
+        "Error",
+        "An error occured, please try again later",
         false
       );
     }
@@ -58,25 +70,25 @@ class Goals {
     const { userData, query } = request;
 
     const enums = {
-      active: 'active',
-      reached: 'completed',
-      paused: 'paused',
+      active: "active",
+      reached: "completed",
+      paused: "paused",
     };
 
     Object.freeze(enums);
     let goals = [];
 
     const attributes = [
-      'id',
-      'goalName',
-      'goalValue',
-      'totalSaved',
-      'timeline',
-      'description',
-      'completionRate',
-      'category',
-      'completed',
-      'paused',
+      "id",
+      "goalName",
+      "goalValue",
+      "totalSaved",
+      "timeline",
+      "description",
+      "completionRate",
+      "category",
+      "completed",
+      "paused",
     ];
 
     try {
@@ -112,15 +124,15 @@ class Goals {
         );
       }
       if (!goals.length) {
-        return responseHelper(response, 404, 'Fail', 'No goal found', false);
+        return responseHelper(response, 404, "Fail", "No goal found", false);
       }
-      return responseHelper(response, 200, 'Success', goals, true);
+      return responseHelper(response, 200, "Success", goals, true);
     } catch (error) {
       return responseHelper(
         response,
         500,
-        'Error',
-        'An error occured, please try again later',
+        "Error",
+        "An error occured, please try again later",
         false
       );
     }
@@ -144,8 +156,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -153,8 +165,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -177,13 +189,13 @@ class Goals {
         }
       );
 
-      return responseHelper(response, 200, 'Success', updatedGoal, true);
+      return responseHelper(response, 200, "Success", updatedGoal, true);
     } catch (error) {
       return responseHelper(
         response,
         500,
-        'Error',
-        'An error occured, please try again later',
+        "Error",
+        "An error occured, please try again later",
         false
       );
     }
@@ -203,8 +215,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -213,19 +225,19 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
 
-      return responseHelper(response, 200, 'Success', goal, true);
+      return responseHelper(response, 200, "Success", goal, true);
     } catch (error) {
       return responseHelper(
         response,
         500,
-        'Error',
-        'An error occured, please try again later',
+        "Error",
+        "An error occured, please try again later",
         false
       );
     }
@@ -247,8 +259,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -256,8 +268,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -271,16 +283,16 @@ class Goals {
       return responseHelper(
         response,
         204,
-        'Success',
-        'message deleted succefulloy',
+        "Success",
+        "message deleted succefulloy",
         true
       );
     } catch (error) {
       return responseHelper(
         response,
         500,
-        'Error',
-        'An error occured, please try again later',
+        "Error",
+        "An error occured, please try again later",
         false
       );
     }
@@ -309,8 +321,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -321,9 +333,9 @@ class Goals {
         return responseHelper(
           response,
           400,
-          'Fail',
+          "Fail",
           totalSaved === goalValue
-            ? 'goal has been reached already'
+            ? "goal has been reached already"
             : `Top up value is more than required. You need top up goal with ${
                 goalValue - Number(totalSaved)
               } or lower`,
@@ -350,16 +362,16 @@ class Goals {
       return responseHelper(
         response,
         200,
-        'Success',
-        'Top up was successful',
+        "Success",
+        "Top up was successful",
         true
       );
     } catch (error) {
       return responseHelper(
         response,
         500,
-        'Error',
-        'An error occured, please try again later',
+        "Error",
+        "An error occured, please try again later",
         false
       );
     }
@@ -384,8 +396,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -393,8 +405,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -413,7 +425,7 @@ class Goals {
       return responseHelper(
         response,
         200,
-        'Success',
+        "Success",
         pauseOrContinueGoal,
         true
       );
@@ -421,8 +433,8 @@ class Goals {
       return responseHelper(
         response,
         500,
-        'Error',
-        'An error occured, please try again later',
+        "Error",
+        "An error occured, please try again later",
         false
       );
     }
@@ -447,8 +459,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -456,8 +468,8 @@ class Goals {
         return responseHelper(
           response,
           404,
-          'Fail',
-          'Goal does not exist',
+          "Fail",
+          "Goal does not exist",
           false
         );
       }
@@ -471,13 +483,13 @@ class Goals {
           },
         }
       );
-      return responseHelper(response, 200, 'Success', completeGoal, true);
+      return responseHelper(response, 200, "Success", completeGoal, true);
     } catch (error) {
       return responseHelper(
         response,
         500,
-        'Error',
-        'An error occured, please try again later',
+        "Error",
+        "An error occured, please try again later",
         false
       );
     }

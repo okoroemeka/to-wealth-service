@@ -1,6 +1,22 @@
 'use strict';
+import { Model } from 'sequelize';
 export default (sequelize, DataTypes) => {
-  const NetworthSettings = sequelize.define('NetworthSettings', {
+  class NetworthSettings extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      NetworthSettings.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'networthSettings',
+        onDelete: 'CASCADE'
+      })
+    }
+  };
+  NetworthSettings.init({
     interestRate: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -19,17 +35,12 @@ export default (sequelize, DataTypes) => {
       allowNull: true
     },
     savingValue: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: true
     }
-  }, {});
-  NetworthSettings.associate = function(models) {
-    // associations can be defined here
-    NetworthSettings.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'networthSettings',
-      onDelete: 'CASCADE'
-    })
-  };
+  }, {
+    sequelize,
+    modelName: 'NetworthSettings',
+  });
   return NetworthSettings;
 };

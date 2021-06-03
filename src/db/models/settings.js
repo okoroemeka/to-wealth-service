@@ -15,6 +15,10 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         default: 'Nigeria'
       },
+      countryCode: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       currency: {
         type: DataTypes.STRING,
         default: 'NGN'

@@ -183,7 +183,7 @@ const joiGoalTopUpSchema = () =>
       darkMode: Joi.boolean(),
       language: Joi.string(),
       currency: Joi.string(),
-      country: Joi.string()
+      country: Joi.string(),
     })
 
   const joiNetworthSettingsSchema = () =>

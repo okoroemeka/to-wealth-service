@@ -1,5 +1,24 @@
-export default (sequelize, DataTypes) => {
-  const GeneralSettings = sequelize.define('GeneralSettings', {
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class GeneralSettings extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      GeneralSettings.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'generalSettings',
+        onDelete: 'CASCADE'
+      })
+    }
+  };
+  GeneralSettings.init({
     darkMode: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
@@ -14,6 +33,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    countryCode: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     currency: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -22,13 +45,9 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     }
+  }, {
+    sequelize,
+    modelName: 'GeneralSettings',
   });
-  GeneralSettings.associate = (models) => {
-    GeneralSettings.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'generalSettings',
-      onDelete: 'CASCADE'
-    })
-  }
   return GeneralSettings;
 };
