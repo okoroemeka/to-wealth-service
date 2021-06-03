@@ -184,6 +184,7 @@ const joiGoalTopUpSchema = () =>
       language: Joi.string(),
       currency: Joi.string(),
       country: Joi.string(),
+      countryCode: Joi.string(),
     })
 
   const joiNetworthSettingsSchema = () =>

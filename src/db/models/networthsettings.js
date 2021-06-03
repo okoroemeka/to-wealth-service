@@ -18,7 +18,7 @@ export default (sequelize, DataTypes) => {
   };
   NetworthSettings.init({
     interestRate: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: false
     },
     monthlyIncome: {
