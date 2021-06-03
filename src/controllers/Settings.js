@@ -7,7 +7,7 @@ class UserSettings {
     static async updateGeneralSettings(request, response) {
         const {
             userData,
-            body: { darkMode, language, country, currency },
+            body: { darkMode, language, country, currency, countryCode },
         } = request;
 
         try {
@@ -17,6 +17,7 @@ class UserSettings {
                     darkMode,
                     language,
                     country,
+                    countryCode,
                     currency,
                     userId: userData.id
                 });
@@ -28,6 +29,7 @@ class UserSettings {
                     darkMode,
                     language,
                     country,
+                    countryCode,
                     currency,
                 },
                 {
@@ -48,7 +50,7 @@ class UserSettings {
     static async viewGeneralSettings(request, response) {
         const { userData: { id } } = request;
         try {
-            const settings = await Settings.findOne({where: { userId: id }, attributes: ['darkMode', 'country', 'currency', 'language']});
+            const settings = await Settings.findOne({where: { userId: id }, attributes: ['darkMode', 'country', 'countryCode', 'currency', 'language']});
             if (!settings) {
                 return responseHelper(response, 404, 'Error', 'Settings not found', false);
             }

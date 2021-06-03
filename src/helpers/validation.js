@@ -183,13 +183,15 @@ const joiGoalTopUpSchema = () =>
       darkMode: Joi.boolean(),
       language: Joi.string(),
       currency: Joi.string(),
-      country: Joi.string()
+      country: Joi.string(),
     })
 
   const joiNetworthSettingsSchema = () =>
     Joi.object({
       interestRate: Joi.number(),
-      monthlyIncome: Joi.number()
+      monthlyIncome: Joi.number(),
+      savingType: Joi.string(),
+      savingValue: Joi.number()
     })
 
 export {
