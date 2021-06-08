@@ -1,6 +1,27 @@
-export default (sequelize, DataTypes) => {
-  const Goal = sequelize.define(
-    'Goal',
+"use strict";
+const { Model } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
+  class Goal extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      Goal.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'author',
+        onDelete: 'CASCADE',
+      });
+      Goal.belongsTo(models.TransactionCategory, {
+        foreignKey: 'category',
+        as: 'goals',
+        onDelete: 'CASCADE',
+      });
+    }
+  }
+  Goal.init(
     {
       goalName: {
         type: DataTypes.STRING,
@@ -8,7 +29,7 @@ export default (sequelize, DataTypes) => {
         validate: {
           notEmpty: {
             args: true,
-            msg: 'Please provide goal name',
+            msg: "Please provide goal name",
           },
         },
       },
@@ -18,7 +39,7 @@ export default (sequelize, DataTypes) => {
         validate: {
           notEmpty: {
             args: true,
-            msg: 'Please provide goal value',
+            msg: "Please provide goal value",
           },
         },
       },
@@ -29,14 +50,14 @@ export default (sequelize, DataTypes) => {
         validate: {
           notEmpty: {
             args: true,
-            msg: 'Please provide goal timeline',
+            msg: "Please provide goal timeline",
           },
         },
       },
       description: {
         type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: '',
+        defaultValue: "",
       },
       completionRate: {
         type: DataTypes.DOUBLE,
@@ -54,7 +75,7 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
       },
       category: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       userId: {
@@ -62,15 +83,10 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
     },
-    {}
+    {
+      sequelize,
+      modelName: "Goal",
+    }
   );
-  Goal.associate = (models) => {
-    // associations can be defined here
-    Goal.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'author',
-      onDelete: 'CASCADE',
-    });
-  };
   return Goal;
 };

@@ -61,17 +61,12 @@ const joiGoalSchema = () =>
       'any.required': 'timeline is reqiured',
       'string.empty': 'timeline cannot be empty',
     }),
-    totalSaved: Joi.string().messages({
-      'string.empty': 'totalSaved field cannot be empty',
-    }),
+    totalSaved: Joi.optional(),
     category: Joi.number().required().messages({
       'any.required': 'category is reqiured',
       'string.empty': 'category field cannot be empty',
     }),
-    description: Joi.string().required().messages({
-      'any.required': 'description is reqiured',
-      'string.empty': 'description field cannot be empty',
-    }),
+    description: Joi.optional(),
   });
 
 const joiUpdatePasswordSchema = () =>
