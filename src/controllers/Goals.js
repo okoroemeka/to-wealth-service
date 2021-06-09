@@ -2,7 +2,7 @@ import models from "../db/models";
 import { response as responseHelper, queryHelper } from "../helpers";
 import QueryHelpers from "../helpers/query";
 
-const { GoalModel: Goal } = models;
+const { Goal } = models;
 /**
  * Goals
  */
@@ -13,7 +13,6 @@ class Goals {
    * @param {object} response
    */
   static async createGoal(request, response) {
-    console.log("here");
     const {
       body: {
         goalName,
@@ -35,7 +34,8 @@ class Goals {
           response,
           403,
           "Error",
-          "You have reached the maximum number of goals, complete one or more to create another"
+          "You have reached the maximum number of goals, complete one or more to create another",
+          false
         );
       }
       const goal = await Goal.create({
