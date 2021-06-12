@@ -6,6 +6,8 @@ import settingsRouter from "./settings";
 import networthSettingsRouter from "./networthSettings";
 import categoryRouter from "./category";
 import transactionRouter from "./transaction";
+import networthRouter from "./networth";
+import onboardingRouter from "./onboard";
 
 export {
   userRouter,
@@ -15,4 +17,6 @@ export {
   networthSettingsRouter,
   categoryRouter,
   transactionRouter,
+  networthRouter,
+  onboardingRouter,
 };

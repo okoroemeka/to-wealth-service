@@ -9,7 +9,7 @@ import {
   joiGoalTopUpSchema,
   joiTransactionSchema
 } from '../helpers';
-import { joiGeneralSettingsSchema, joiNetworthSettingsSchema } from '../helpers/validation';
+import { joiGeneralSettingsSchema, joiNetworthSettingsSchema, joiNetworthSchema, joiNetworthTopupSchema } from '../helpers/validation';
 
 /**
  * Validation middleware class
@@ -168,6 +168,38 @@ export default class Validation {
   static async networthSettingsValidation(request, response, next) {
     try {
       const validation = joiNetworthSettingsSchema();
+      await validation.validateAsync(request.body);
+      return next();
+    } catch (error) {
+      return responseHelper(response, 400, 'Error', error.message, false);
+    }
+  }
+
+  /**
+   * @returns {functionCall} response
+   * @param {object} request
+   * @param {object} response
+   * @param {object} next
+   */
+  static async networthValidation(request, response, next) {
+    try {
+      const validation = joiNetworthSchema();
+      await validation.validateAsync(request.body);
+      return next();
+    } catch (error) {
+      return responseHelper(response, 400, 'Error', error.message, false);
+    }
+  }
+
+  /**
+   * @returns {functionCall} response
+   * @param {object} request
+   * @param {object} response
+   * @param {object} next
+   */
+  static async networthTopupValidation(request, response, next) {
+    try {
+      const validation = joiNetworthTopupSchema();
       await validation.validateAsync(request.body);
       return next();
     } catch (error) {

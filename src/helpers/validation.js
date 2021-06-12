@@ -190,6 +190,18 @@ const joiGoalTopUpSchema = () =>
       savingValue: Joi.number()
     })
 
+  const joiNetworthSchema = () =>
+    Joi.object({
+      name: Joi.string(),
+      amount: Joi.number(),
+      type: Joi.string()
+    })
+
+  const joiNetworthTopupSchema = () =>
+    Joi.object({
+      amount: Joi.number(),
+    })
+
 export {
   joiSignupSchema,
   joiSignInSchema,
@@ -200,5 +212,7 @@ export {
   joiGoalTopUpSchema,
   joiGeneralSettingsSchema,
   joiNetworthSettingsSchema,
-  joiTransactionSchema
+  joiTransactionSchema,
+  joiNetworthSchema,
+  joiNetworthTopupSchema,
 };

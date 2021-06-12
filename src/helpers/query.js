@@ -8,7 +8,7 @@ class QueryHelpers {
    * @param {object} queryParameters
    * @returns {object} result
    */
-  static async findOne(model, queryParameters) {
+  static async findOne(model, queryParameters, attributes) {
     return model.findOne({
       where: {
         ...queryParameters,
