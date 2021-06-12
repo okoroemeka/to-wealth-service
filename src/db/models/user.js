@@ -94,6 +94,11 @@ export default (sequelize, DataTypes) => {
         defaultValue: true,
         allowNull: true,
       },
+      onboarded: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: true
+      }
     },
     {
       hooks: {
