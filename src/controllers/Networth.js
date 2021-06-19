@@ -18,8 +18,8 @@ class NetworthController {
       if (existingNetworth) {
         // Update the amount
         const [_, updatedNetworth] = await Networth.update(
-          { amount },
-          { where: { ownerId: userData.id, type } }
+          { amount: existingNetworth.amount + parseFloat(amount) },
+          { where: { ownerId: userData.id, type, name } }
         );
 
         return responseHelper(response, 201, "Success", updatedNetworth, true);
