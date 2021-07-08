@@ -8,6 +8,7 @@ import categoryRouter from "./category";
 import transactionRouter from "./transaction";
 import networthRouter from "./networth";
 import onboardingRouter from "./onboard";
+import accountRouter from "./account";
 
 export {
   userRouter,
@@ -19,4 +20,5 @@ export {
   transactionRouter,
   networthRouter,
   onboardingRouter,
+  accountRouter
 };
