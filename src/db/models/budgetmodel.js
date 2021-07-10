@@ -16,27 +16,29 @@ module.exports = (sequelize, DataTypes) => {
         as: "budgets",
         onDelete: "CASCADE",
       });
-      BudgetModel.belongsTo(models.TransactionCategory, {
-        foreignKey: "categoryId",
-        as: "budgetsCategory",
-        onDelete: "CASCADE",
-      });
+      // BudgetModel.belongsTo(models.TransactionCategory, {
+      //   foreignKey: "categoryId",
+      //   as: "budgetsCategory",
+      //   onDelete: "CASCADE",
+      // });
     }
   };
   BudgetModel.init({
-    categoryId: {
-      type: DataTypes.INTEGER,
+    category: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    description: {
+    subCategory: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: "please provide budget description",
-        },
-      },
+      allowNull: true
+    },
+    date: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     budget: {
       type: DataTypes.DOUBLE,
