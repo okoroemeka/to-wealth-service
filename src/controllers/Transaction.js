@@ -1,7 +1,7 @@
 import models from "../db/models";
 import { response as responseHelper, queryHelper } from "../helpers";
 
-const { Transaction: TransactionModel } = models;
+const { Transaction: TransactionModel, Account } = models;
 
 class Transaction {
   /**
@@ -26,6 +26,15 @@ class Transaction {
         date,
         userId: id,
       });
+
+      const account = await Account.findOne({where: {userId: id, name: "cashAccount"}});
+      if(type === "income"){
+        const newBalance = account.balance + amount;
+        await queryHelper.update(Account, {balance: newBalance}, {id: account.id});
+      } else if (type === "expense"){
+        const newBalance = account.balance - amount;
+        await queryHelper.update(Account, {balance: newBalance}, {id: account.id});
+      }
 
       return responseHelper(response, 201, "Success", newTransaction, true);
     } catch (error) {

@@ -118,6 +118,7 @@ export default (sequelize, DataTypes) => {
     User.hasMany(models.BudgetModel, { foreignKey: 'userId', as: 'Budgets' });
     User.hasMany(models.TransactionCategory, { foreignKey: 'userId', as: 'TransactionCategories' });
     User.hasMany(models.Transaction, { foreignKey: 'userId', as: 'Transactions' });
+    User.hasMany(models.Account, { foreignKey: 'userId', as: 'Accounts' });
   };
   return User;
 };

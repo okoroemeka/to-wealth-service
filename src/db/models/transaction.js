@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'transactions',
         onDelete: 'CASCADE'
       });
-      Transaction.belongsTo(models.TransactionCategory, {
-        foreignKey: "categoryId",
-        as: 'transactionCategory',
-        onDelete: 'CASCADE'
-      })
+      // Transaction.belongsTo(models.TransactionCategory, {
+      //   foreignKey: "categoryId",
+      //   as: 'transactionCategory',
+      //   onDelete: 'CASCADE'
+      // })
     }
   }
   Transaction.init(
@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      categoryId: {
-        type: DataTypes.INTEGER,
+      category: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       amount: {

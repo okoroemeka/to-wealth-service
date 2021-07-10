@@ -121,20 +121,28 @@ const joiUpdateProfileSchema = () =>
 
 const joiBudgetSchema = () =>
   Joi.object({
-    categoryId: Joi.number().required().messages({
+    category: Joi.string().required().messages({
       'any.required': 'category is reqiured',
       'string.empty': 'category field cannot be empty',
     }),
+
+    date: Joi.string().required().messages({
+      'any.required': 'date is reqiured',
+      'string.empty': 'date field cannot be empty',
+    }),
+
+    type: Joi.string().required().messages({
+      'any.required': 'type is reqiured',
+      'string.empty': 'type field cannot be empty',
+    }),
+
+    subCategory: Joi.string(),
 
     budget: Joi.string().required().messages({
       'any.required': 'budget is reqiured',
       'string.empty': 'budget field cannot be empty',
     }),
 
-    description: Joi.string().required().messages({
-      'any.required': 'description is reqiured',
-      'string.empty': 'description field cannot be empty',
-    }),
   });
 
 const joiTransactionSchema = () =>

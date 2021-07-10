@@ -16,20 +16,21 @@ class Budget {
    * @param {object} response
    */
   static async createBudget(request, response) {
+    console.log(request.body);
     const {
-      body: { categoryId, budget, description },
+      body: { category, budget, type, subCategory, date },
       userData,
     } = request;
     try {
       const newBudget = await BudgetModel.create({
-        categoryId,
+        category,
         budget,
-        description,
+        type,
+        subCategory,
+        date,
         userId: userData.id,
       });
 
-      console.log({newBudget});
-      
       return responseHelper(response, 201, "Success", newBudget, true);
     } catch (error) {
       return responseHelper(
@@ -53,7 +54,6 @@ class Budget {
       const { userData } = request;
       const budget = await BudgetModel.findOne({
         where: { id: budgetId, userId: userData.id },
-        include: ["budgetsCategory"],
       });
 
       if (!budget) {
@@ -220,30 +220,39 @@ class Budget {
     } = request;
 
     try {
+      console.log("here");
       const splitted = date.split(" ").join("");
 
       const start = dayjs(splitted).startOf("M");
       const end = dayjs(splitted).endOf("M");
 
       const budgets = await BudgetModel.findAll({
-        where: { userId },
-        include: ["budgetsCategory"],
-        attributes: ["categoryId", "budget", 'id'],
+        where: { userId, date },
+        attributes: ["category", "subCategory", "type", "budget", "id"],
       });
 
       const wholeTransactions = await Transaction.findAll({
         where: { userId },
-        attributes: ["amount", "date", "categoryId"],
-        include: ["transactionCategory"],
+        attributes: ["amount", "date", "category"],
       });
 
       const responseData = budgets.map((budget) => {
-        const transactions = wholeTransactions.filter(
-          (trx) =>
-            trx.categoryId === budget.categoryId &&
-            trx.date >= start &&
-            trx.date <= end
-        );
+        let transactions;
+        if (budget.type === "expense") {
+          transactions = wholeTransactions.filter(
+            (trx) =>
+              trx.category === budget.subCategory &&
+              trx.date >= start &&
+              trx.date <= end
+          );
+        } else {
+          transactions = wholeTransactions.filter(
+            (trx) =>
+              trx.category === budget.category &&
+              trx.date >= start &&
+              trx.date <= end
+          );
+        }
 
         const actual = transactions.reduce(
           (total, current) => total + current.amount,
@@ -251,12 +260,13 @@ class Budget {
         );
 
         return {
-          category: budget.budgetsCategory.categoryName,
-          type: budget.budgetsCategory.type,
+          category: budget.category,
+          subCategory: budget.subCategory,
+          type: budget.type,
           budget: budget.budget,
           actual,
           remaining: budget.budget - actual,
-          id: budget.id
+          id: budget.id,
         };
       });
 
