@@ -213,6 +213,40 @@ class Budget {
     }
   }
 
+  static async getPreviousActual(request, response) {
+    const {
+      userData: { id: userId },
+      query: { date, category },
+    } = request;
+    console.log({date, category});
+    try {
+      const splitted = date.split(" ").join("");
+      console.log(splitted);
+      const monthStart = dayjs(splitted).startOf("M");
+      const start = dayjs(monthStart).subtract(1, "month");
+      const end = dayjs(start).endOf("M");
+
+      const transactions = await Transaction.findAll({
+        where: { userId, category },
+        attributes: ["amount", "date", "category"],
+      });
+
+      console.log(transactions);
+
+      const actual = transactions.filter(
+        (trx) => trx.date >= start && trx.date <= end
+      );
+
+      const result = {
+        actual: actual.reduce((total, acc) => total + acc, 0),
+      };
+
+      return responseHelper(response, 200, "Success", result, true);
+    } catch (error) {
+      return responseHelper(response, 500, "Error", error, false);
+    }
+  }
+
   static async formatBudget(request, response) {
     const {
       userData: { id: userId },
@@ -220,7 +254,6 @@ class Budget {
     } = request;
 
     try {
-      console.log("here");
       const splitted = date.split(" ").join("");
 
       const start = dayjs(splitted).startOf("M");

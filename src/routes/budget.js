@@ -19,6 +19,12 @@ budgetRouter.get(
 );
 
 budgetRouter.get(
+  '/budget/previous',
+  VerifyUser.verifyToken,
+  Budget.getPreviousActual
+)
+
+budgetRouter.get(
   '/budget/:budgetId',
   VerifyUser.verifyToken,
   Budget.getBudget
